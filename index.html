@@ -1,0 +1,131 @@
+<!DOCTYPE html>
+<html lang="en" dir="ltr">
+<head>
+  <meta charset="utf-8">
+  <title>Boolzapp by Tiba</title>
+
+  <!-- Lato Font -->
+  <link rel="preconnect" href="https://fonts.gstatic.com">
+  <link href="https://fonts.googleapis.com/css2?family=Lato&display=swap" rel="stylesheet">
+  <!-- Font Awesome -->
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+  integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
+  crossorigin="anonymous"/>
+  <!-- CSS -->
+  <link rel="stylesheet" href="css/style.css">
+  <!-- JQuery -->
+  <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+  <!-- Vue -->
+  <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+</head>
+<body>
+
+  <div id="root" class="container">
+    <!-- Contenitore sx -->
+    <div class="left">
+      <!-- Header sinistro -->
+      <div class="headerLeft">
+        <div class="headerLeftLogo">
+          <img src="img/tiba.jpg" alt="Nome Utente">
+          <span>Alessandro</span>
+        </div>
+        <div class="headerLeftIcons">
+          <i class="fas fa-circle-notch"></i>
+          <i class="fas fa-comment-alt"></i>
+          <i class="fas fa-ellipsis-v"></i>
+        </div>
+      </div>
+      <!-- Annuncio notifiche desktop -->
+      <div class="leftAnnounce">
+        <div class="leftAnnounceLogo">
+          <i class="fa fa-bell-slash"></i>
+        </div>
+        <div class="leftAnnounceText">
+          <h3>Ricevi notifiche di nuovi messaggi</h3>
+          <a href="#">Attiva notifiche desktop</a>
+        </div>
+      </div>
+      <!-- Searchbar -->
+      <div class="leftSearch">
+        <label class="searchLabel" for="search">
+          <i class="fa fa-search" aria-hidden="true"></i>
+        </label>
+        <input id="contacts-filter" class="leftSearchInput" placeholder="Cerca o inizia una nuova chat"
+        name="search">
+      </div>
+      <!-- Contatti & conversazioni -->
+      <div class="contacts">
+        <div class="contact"
+        v-for="(contact, index) in contacts"
+        v-if="contact.visible"
+        @click="change_active_contact(index)"
+        :class="index == active_contact ? 'active' : ''">
+        <div class="contactImg">
+          <img :src="'img/avatar' + contact.avatar + '.png'" :alt="contact.name">
+        </div>
+        <div class="contactUser">
+          <h3>
+            <span class="contact-name"> {{contact.name}} </span>
+            <span class="floatR">22:00</span>
+          </h3>
+          <small>Ciaooo</small>
+        </div>
+      </div>
+    </div>
+  </div>  <!-- Fine contenitore sx -->
+
+  <!-- Contenitore dx -->
+  <div class="right">
+    <!-- Header destro -->
+    <div class="headerRight">
+      <div class="headerRightImg">
+        <img :src="'img/avatar' + contacts[active_contact].avatar + '.png'" alt="">
+        <h3>
+          <span id="headerRight-contact-name">
+            {{ contacts[active_contact].name }}
+          </span>
+          <br>
+          <small>
+            Ultimo accesso oggi alle 22:00
+          </small>
+        </h3>
+      </div>
+      <div class="headerRightIcons">
+        <i class="fas fa-search"></i>
+        <i class="fas fa-paperclip"></i>
+        <i class="fas fa-ellipsis-v"></i>
+      </div>
+    </div>
+    <!-- Chat & messaggi -->
+    <div class="rightMsgContainer">
+      <div class="rightMsg">
+        <div
+        v-for="message_object in contacts[active_contact].messages"  class="msg" :class="message_object.status">
+        <span class="msgText">
+          {{ message_object.message }}
+        </span>
+        <span class="msgTime">
+          {{message_object.date}}
+        </span>
+      </div>
+    </div>
+    <!-- Input per inviare messaggi -->
+    <div class="rightFooter">
+      <div class="rightFooterIcon floatL">
+        <i class="far fa-smile"></i>
+      </div>
+      <input v-model='newMsg' @keyup.enter='sendMsg' class="newMsgInput" placeholder="Scrivi un messaggio">
+      <div class="rightFooterIcon floatR">
+        <i class="fa fa-microphone" aria-hidden="true"></i>
+      </div>
+    </div>
+  </div> <!-- Fine contenitore dx -->
+</div>
+
+
+
+
+<!-- JS -->
+<script src="js/script.js"></script>
+</body>
+</html>
