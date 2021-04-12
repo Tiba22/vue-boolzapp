@@ -3,6 +3,7 @@ var app = new Vue({
   data: {
     active_contact: 0,
     newMsg: '',
+    searchText: '',
     user: {
       name: 'Alessandro',
       avatar: 'img/tiba.jpg'
@@ -36,17 +37,17 @@ var app = new Vue({
         visible: true,
         messages: [
           {
-            date: '20/03/2020 16:30:00',
+            date: '12/03/2020 16:30:00',
             message: 'Ciao come stai?',
             status: 'sent'
           },
           {
-            date: '20/03/2020 16:30:55',
+            date: '12/03/2020 16:30:55',
             message: 'Bene grazie! Stasera ci vediamo?',
             status: 'received'
           },
           {
-            date: '20/03/2020 16:35:00',
+            date: '12/03/2020 16:35:00',
             message: 'Mi piacerebbe ma devo programmare BoolzApp.',
             status: 'sent'
           }
@@ -58,17 +59,17 @@ var app = new Vue({
         visible: true,
         messages: [
           {
-            date: '28/03/2020 10:10:40',
+            date: '12/03/2020 10:10:40',
             message: 'La Marianna va in campagna',
             status: 'received'
           },
           {
-            date: '28/03/2020 10:20:10',
+            date: '12/03/2020 10:20:10',
             message: 'Sicuro di non aver sbagliato chat?',
             status: 'sent'
           },
           {
-            date: '28/03/2020 16:15:22',
+            date: '12/03/2020 16:15:22',
             message: 'Ah scusa!',
             status: 'received'
           }
@@ -173,30 +174,52 @@ var app = new Vue({
     },
 
     sendMsg () {
-      // Creo un nuovo oggetto messaggio inviato
-      let newMsgObj = {
-        date: '10/01/2020 15:30:55',
-        message: this.newMsg,
-        status: 'sent'
-      };
-      // Inserisco il messaggio nella chat aperta al momento
-      let this_chat = this.contacts[this.active_contact].messages;
-      this_chat.push(newMsgObj);
-      // Ripulisco l'input
-      this.newMsg='';
-
-      // Funzione per risposta automatica con ritardo di 2 secondi
-      setTimeout(function() {
-        // Creo un nuovo oggetto messaggio ricevuto
-        let newPcMsgObj = {
-          date: '10/01/2020 15:30:55',
-          message: 'Ok!',
-          status: 'received'
+      // Se il messaggio è vuoto non viene inviato
+      if(this.newMsg.length != 0) {
+        // Creo un nuovo oggetto messaggio inviato
+        let newMsgObj = {
+          date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
+          message: this.newMsg,
+          status: 'sent'
         };
-        // Inserisco la risposta nell'array della conversazione attuale
-        this_chat.push(newPcMsgObj);
+        // Inserisco il messaggio nella chat aperta al momento
+        let this_chat = this.contacts[this.active_contact].messages;
+        this_chat.push(newMsgObj);
+        // Ripulisco l'input
+        this.newMsg='';
 
-      }, 2000);
+        // Funzione per risposta automatica con ritardo di 1 secondo
+        setTimeout(function() {
+          // Creo un nuovo oggetto messaggio ricevuto
+          let newPcMsgObj = {
+            date: dayjs().format('DD/MM/YYYY HH:mm:ss'),
+            message: 'Ok!',
+            status: 'received'
+          };
+          // Inserisco la risposta nell'array della conversazione attuale
+          this_chat.push(newPcMsgObj);
+
+        }, 1000);
+      }
+    },
+
+    // Funzione con DayJS per trasformare la data in Ora e Minuti
+    get_time(date_string) {
+      return dayjs(date_string, "DD/MM/YYYY HH:mm:ss").format('HH:mm');
+    },
+
+    searchFilter() {
+      this.contacts.forEach((contact) => {
+        let contact_name = contact.name.toLowerCase();
+        let filtered_name = this.searchText.toLowerCase();
+        if (contact_name.includes(filtered_name)) {
+          contact.visible=true;
+
+        } else {
+          contact.visible=false;
+
+        }
+      })
     }
   }
 });

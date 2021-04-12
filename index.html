@@ -11,6 +11,8 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
   integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
   crossorigin="anonymous"/>
+  <!-- DayJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <!-- JQuery -->
@@ -50,7 +52,8 @@
         <label class="searchLabel" for="search">
           <i class="fa fa-search" aria-hidden="true"></i>
         </label>
-        <input id="contacts-filter" class="leftSearchInput" placeholder="Cerca o inizia una nuova chat"
+        <input
+          @keyup="searchFilter" v-model="searchText" class="leftSearchInput" placeholder="Cerca o inizia una nuova chat"
         name="search">
       </div>
       <!-- Contatti & conversazioni -->
@@ -105,7 +108,7 @@
           {{ message_object.message }}
         </span>
         <span class="msgTime">
-          {{message_object.date}}
+          {{ get_time(message_object.date) }}
         </span>
       </div>
     </div>
