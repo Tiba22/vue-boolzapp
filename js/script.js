@@ -4,6 +4,7 @@ var app = new Vue({
     active_contact: 0,
     newMsg: '',
     searchText: '',
+    visible: false,
     user: {
       name: 'Alessandro',
       avatar: 'img/tiba.jpg'
@@ -167,6 +168,13 @@ var app = new Vue({
       }
     ]
   },
+
+  // Autoscroll
+  updated() {
+    let container = this.$el.querySelector("#rightMsg");
+    container.scrollTop = container.scrollHeight;
+  },
+
   methods: {
 
     change_active_contact(contact_index) {
@@ -220,6 +228,8 @@ var app = new Vue({
 
         }
       })
-    }
+    },
+
+
   }
 });

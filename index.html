@@ -11,14 +11,14 @@
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
   integrity="sha512-iBBXm8fW90+nuLcSKlbmrPcLa0OT92xO1BIsZ+ywDWZCvqsWgccV3gFoRBv0z+8dLJgyAHIhR35VZc2oM/gI1w=="
   crossorigin="anonymous"/>
-  <!-- DayJS -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
   <!-- CSS -->
   <link rel="stylesheet" href="css/style.css">
   <!-- JQuery -->
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
   <!-- Vue -->
   <script src="https://cdn.jsdelivr.net/npm/vue"></script>
+  <!-- DayJS -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/dayjs/1.10.4/dayjs.min.js" integrity="sha512-0fcCRl828lBlrSCa8QJY51mtNqTcHxabaXVLPgw/jPA5Nutujh6CbTdDgRzl9aSPYW/uuE7c4SffFUQFBAy6lg==" crossorigin="anonymous"></script>
 </head>
 <body>
 
@@ -101,15 +101,25 @@
     </div>
     <!-- Chat & messaggi -->
     <div class="rightMsgContainer">
-      <div class="rightMsg">
+      <div id="rightMsg" class="rightMsg">
         <div
-        v-for="message_object in contacts[active_contact].messages"  class="msg" :class="message_object.status">
+        v-for="message_object in contacts[active_contact].messages" class="msg" :class="message_object.status">
         <span class="msgText">
           {{ message_object.message }}
         </span>
         <span class="msgTime">
           {{ get_time(message_object.date) }}
         </span>
+        <i @click="visible = !visible" class="fa fa-chevron-down floatR msgOption"></i>
+        <div class="msgOptionContainer" v-if="visible" >
+          <div class="msgInfo">
+            <span>Info messaggio</span>
+          </div>
+          <div class="msgDelete">
+            <span>Cancella messaggio</span>
+          </div>
+        </div>
+
       </div>
     </div>
     <!-- Input per inviare messaggi -->

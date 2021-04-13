@@ -325,6 +325,35 @@ body {
   color: #B6B9BB;
 }
 
+.msgOption {
+  color: grey;
+  cursor: pointer;
+  display: block;
+}
+
+.msgOptionContainer {
+  position: absolute;
+  z-index: 100;
+  bottom: -60px;
+  right: 0;
+  height: 70px;
+  width: 145px;
+  background: white;
+  box-shadow: 0px 0px 30px -10px grey;
+}
+
+.msgOptionContainer>div {
+  line-height: 35px;
+  text-align: center;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.msgOptionContainer>div:hover {
+  background-color: #C0C0C0;
+}
+
+
 
 
 /* Scrollbars */
